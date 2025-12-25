@@ -1,2 +1,4 @@
-*.md
+**/*.md
+
 !README.md
+languages/compile.sh

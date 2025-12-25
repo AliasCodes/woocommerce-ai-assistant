@@ -38,7 +38,7 @@ $settings = get_option( 'wp_ai_assistant_settings', array() );
 					</th>
 					<td>
 						<input type="url" id="api_url" name="wp_ai_assistant_settings[api_url]" value="<?php echo esc_attr( isset( $settings['api_url'] ) ? $settings['api_url'] : 'http://localhost:3000' ); ?>" class="regular-text" required>
-						<p class="description"><?php esc_html_e( 'Backend API URL (e.g., http://localhost:3000 or https://api.yourdomain.com)', 'wp-ai-assistant' ); ?></p>
+						<p class="description"><?php esc_html_e( 'Backend API URL (https://api.webtamino.com)', 'wp-ai-assistant' ); ?></p>
 					</td>
 				</tr>
 				

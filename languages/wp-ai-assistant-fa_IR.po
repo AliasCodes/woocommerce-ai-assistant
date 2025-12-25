@@ -102,8 +102,8 @@ msgstr "پیکربندی API"
 msgid "API URL"
 msgstr "آدرس API"
 
-msgid "Backend API URL (e.g., http://localhost:3000 or https://api.yourdomain.com)"
-msgstr "آدرس API بک‌اند (مثلاً http://localhost:3000 یا https://api.yourdomain.com)"
+msgid "Backend API URL (https://api.webtamino.com)"
+msgstr "آدرس API بک‌اند (مثلاً https://api.webtamino.com)"
 
 msgid "API Key"
 msgstr "کلید API"
