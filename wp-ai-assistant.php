@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: WooCommerce AI Assistant
- * Plugin URI: https://webtamino.com
+ * Plugin URI: https://webtamino.com/plugins/woocommerce-ai-assistant
  * Description: AI-powered chat assistant for your WordPress website with bilingual support (English/Persian)
  * Version: 1.0.0
  * Author: AliasCodes
