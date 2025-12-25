@@ -346,3 +346,13 @@ msgstr "آدرس API پیکربندی نشده است"
 msgid "Connection successful!"
 msgstr "اتصال موفقیت‌آمیز بود!"
 
+# WooCommerce and REST API Notices
+msgid "<strong>WooCommerce is not installed or activated!</strong> WP AI Assistant requires WooCommerce to provide product recommendations and order creation. Please <a href=\"%s\" target=\"_blank\">install WooCommerce</a> or activate it from the <a href=\"%s\">Plugins page</a>."
+msgstr "<strong>ووکامرس نصب یا فعال نشده است!</strong> دستیار هوش مصنوعی به ووکامرس نیاز دارد تا بتواند پیشنهادات محصول و ایجاد سفارش را ارائه دهد. لطفاً <a href=\"%s\" target=\"_blank\">ووکامرس را نصب کنید</a> یا آن را از <a href=\"%s\">صفحه افزونه‌ها</a> فعال کنید."
+
+msgid "<strong>WordPress REST API is disabled!</strong> WP AI Assistant requires the REST API to function properly. Please enable the REST API or check if any plugin/theme is blocking it."
+msgstr "<strong>REST API وردپرس غیرفعال است!</strong> دستیار هوش مصنوعی برای عملکرد صحیح به REST API نیاز دارد. لطفاً REST API را فعال کنید یا بررسی کنید که آیا افزونه یا قالبی آن را مسدود کرده است."
+
+msgid "<strong>WooCommerce REST API may not be properly configured!</strong> For full functionality, ensure WooCommerce REST API is enabled. <a href=\"%s\">Check WooCommerce Settings</a>."
+msgstr "<strong>REST API ووکامرس ممکن است به درستی پیکربندی نشده باشد!</strong> برای عملکرد کامل، اطمینان حاصل کنید که REST API ووکامرس فعال است. <a href=\"%s\">تنظیمات ووکامرس را بررسی کنید</a>."
+

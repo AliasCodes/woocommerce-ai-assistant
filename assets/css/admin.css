@@ -154,6 +154,30 @@
 	color: #92400e;
 }
 
+/* Requirement Notices */
+.wp-ai-requirement-notice {
+	border-left-width: 4px;
+	padding: 12px;
+	margin: 15px 0;
+}
+
+.wp-ai-requirement-notice.notice-error {
+	border-left-color: #dc3232;
+}
+
+.wp-ai-requirement-notice.notice-warning {
+	border-left-color: #ffb900;
+}
+
+.wp-ai-requirement-notice a {
+	text-decoration: none;
+	font-weight: 600;
+}
+
+.wp-ai-requirement-notice a:hover {
+	text-decoration: underline;
+}
+
 /* RTL Support */
 body.rtl .wp-ai-admin-container {
 	direction: rtl;
@@ -161,5 +185,10 @@ body.rtl .wp-ai-admin-container {
 
 body.rtl .wp-ai-card-header {
 	flex-direction: row-reverse;
+}
+
+body.rtl .wp-ai-requirement-notice {
+	border-left-width: 0;
+	border-right-width: 4px;
 }
 

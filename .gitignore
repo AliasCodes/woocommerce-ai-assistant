@@ -1,4 +1,5 @@
 **/*.md
 
 !README.md
+!REQUIREMENTS.md
 languages/compile.sh

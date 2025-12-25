@@ -342,3 +342,13 @@ msgstr ""
 msgid "Connection successful!"
 msgstr ""
 
+# WooCommerce and REST API Notices
+msgid "<strong>WooCommerce is not installed or activated!</strong> WP AI Assistant requires WooCommerce to provide product recommendations and order creation. Please <a href=\"%s\" target=\"_blank\">install WooCommerce</a> or activate it from the <a href=\"%s\">Plugins page</a>."
+msgstr ""
+
+msgid "<strong>WordPress REST API is disabled!</strong> WP AI Assistant requires the REST API to function properly. Please enable the REST API or check if any plugin/theme is blocking it."
+msgstr ""
+
+msgid "<strong>WooCommerce REST API may not be properly configured!</strong> For full functionality, ensure WooCommerce REST API is enabled. <a href=\"%s\">Check WooCommerce Settings</a>."
+msgstr ""
+

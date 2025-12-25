@@ -21,10 +21,21 @@ WooCommerce AI Assistant brings the power of artificial intelligence to your Wor
 ## Requirements
 
 - WordPress 5.8 or higher
-- PHP 7.4 or higher
+- PHP 7.4 or higher (PHP 8.0+ recommended)
 - MySQL 5.7 or higher
-- WooCommerce 5.0+ (optional but recommended)
+- **WooCommerce 5.0+** (required for product features)
+- WordPress REST API enabled
 - Active subscription to WordPress Assistant platform
+
+### Automatic Requirement Checks ✅
+
+The plugin automatically checks for required dependencies and displays admin notices if:
+
+- ❌ **WooCommerce is not installed or activated** (Critical)
+- ❌ **WordPress REST API is disabled** (Critical)
+- ⚠️ **WooCommerce REST API is not configured** (Warning)
+
+See [REQUIREMENTS.md](REQUIREMENTS.md) for detailed information.
 
 ## Installation
 

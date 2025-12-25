@@ -35,6 +35,9 @@ class WP_AI_Admin {
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
 		add_action( 'admin_post_wp_ai_test_connection', array( $this, 'test_connection' ) );
 		add_action( 'admin_post_wp_ai_export_users', array( $this, 'export_users' ) );
+		
+		// Admin notices for requirements
+		add_action( 'admin_notices', array( $this, 'show_requirement_notices' ) );
 	}
 	
 	/**
@@ -294,6 +297,147 @@ class WP_AI_Admin {
 		
 		fclose( $output );
 		exit;
+	}
+	
+	/**
+	 * Show requirement notices on plugin admin pages
+	 */
+	public function show_requirement_notices() {
+		// Only show on our plugin pages
+		$screen = get_current_screen();
+		if ( ! $screen || strpos( $screen->id, 'wp-ai-assistant' ) === false ) {
+			return;
+		}
+		
+		$notices = array();
+		
+		// Check WooCommerce
+		if ( ! $this->is_woocommerce_active() ) {
+			$notices[] = array(
+				'type'    => 'error',
+				'message' => sprintf(
+					/* translators: %s: WooCommerce plugin link */
+					__( '<strong>WooCommerce is not installed or activated!</strong> WP AI Assistant requires WooCommerce to provide product recommendations and order creation. Please <a href="%s" target="_blank">install WooCommerce</a> or activate it from the <a href="%s">Plugins page</a>.', 'wp-ai-assistant' ),
+					'https://wordpress.org/plugins/woocommerce/',
+					admin_url( 'plugins.php' )
+				),
+			);
+		}
+		
+		// Check WordPress REST API
+		if ( ! $this->is_rest_api_enabled() ) {
+			$notices[] = array(
+				'type'    => 'error',
+				'message' => __( '<strong>WordPress REST API is disabled!</strong> WP AI Assistant requires the REST API to function properly. Please enable the REST API or check if any plugin/theme is blocking it.', 'wp-ai-assistant' ),
+			);
+		}
+		
+		// Check WooCommerce REST API (only if WooCommerce is active)
+		if ( $this->is_woocommerce_active() && ! $this->is_woocommerce_rest_api_enabled() ) {
+			$notices[] = array(
+				'type'    => 'warning',
+				'message' => sprintf(
+					/* translators: %s: WooCommerce REST API settings link */
+					__( '<strong>WooCommerce REST API may not be properly configured!</strong> For full functionality, ensure WooCommerce REST API is enabled. <a href="%s">Check WooCommerce Settings</a>.', 'wp-ai-assistant' ),
+					admin_url( 'admin.php?page=wc-settings&tab=advanced&section=rest_api' )
+				),
+			);
+		}
+		
+		// Display notices
+		foreach ( $notices as $notice ) {
+			$this->display_admin_notice( $notice['message'], $notice['type'] );
+		}
+	}
+	
+	/**
+	 * Check if WooCommerce is active
+	 *
+	 * @return bool
+	 */
+	private function is_woocommerce_active() {
+		// Check if WooCommerce class exists
+		if ( class_exists( 'WooCommerce' ) ) {
+			return true;
+		}
+		
+		// Check if WooCommerce plugin is active
+		if ( ! function_exists( 'is_plugin_active' ) ) {
+			include_once ABSPATH . 'wp-admin/includes/plugin.php';
+		}
+		
+		return is_plugin_active( 'woocommerce/woocommerce.php' );
+	}
+	
+	/**
+	 * Check if WordPress REST API is enabled
+	 *
+	 * @return bool
+	 */
+	private function is_rest_api_enabled() {
+		// Check if REST API is disabled by filter
+		if ( apply_filters( 'rest_enabled', true ) === false ) {
+			return false;
+		}
+		
+		// Check if REST API is disabled via constant
+		if ( defined( 'REST_API_ENABLED' ) && ! REST_API_ENABLED ) {
+			return false;
+		}
+		
+		// Test if REST API endpoint is accessible
+		$rest_url = get_rest_url();
+		if ( empty( $rest_url ) ) {
+			return false;
+		}
+		
+		// Check if rest_api_init action exists (WordPress 4.4+)
+		if ( ! has_action( 'rest_api_init' ) ) {
+			return false;
+		}
+		
+		return true;
+	}
+	
+	/**
+	 * Check if WooCommerce REST API is enabled
+	 *
+	 * @return bool
+	 */
+	private function is_woocommerce_rest_api_enabled() {
+		// First check if WooCommerce is active
+		if ( ! $this->is_woocommerce_active() ) {
+			return false;
+		}
+		
+		// Check if WooCommerce REST API namespace is registered
+		$namespaces = rest_get_server()->get_namespaces();
+		
+		// WooCommerce registers wc/v3, wc/v2, wc/v1 namespaces
+		$wc_namespaces = array( 'wc/v3', 'wc/v2', 'wc/v1' );
+		
+		foreach ( $wc_namespaces as $namespace ) {
+			if ( in_array( $namespace, $namespaces, true ) ) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * Display admin notice
+	 *
+	 * @param string $message Notice message
+	 * @param string $type Notice type (error, warning, success, info)
+	 */
+	private function display_admin_notice( $message, $type = 'info' ) {
+		$class = 'notice notice-' . $type . ' is-dismissible';
+		printf(
+			'<div class="%1$s"><p>%2$s</p></div>',
+			esc_attr( $class ),
+			wp_kses_post( $message )
+		);
 	}
 }
 
