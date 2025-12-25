@@ -1,0 +1,165 @@
+/**
+ * Admin Styles
+ *
+ * @package WP_AI_Assistant
+ */
+
+/* General Admin Styles */
+.wp-ai-admin-container {
+	max-width: 1200px;
+	margin: 20px 0;
+}
+
+/* Settings Page */
+.wp-ai-settings-section {
+	background: white;
+	padding: 20px;
+	margin: 20px 0;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+}
+
+.wp-ai-settings-section h2 {
+	margin-top: 0;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #eee;
+}
+
+/* Cards */
+.wp-ai-card {
+	background: white;
+	border: 1px solid #ccc;
+	border-radius: 8px;
+	padding: 20px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.wp-ai-card-header {
+	display: flex;
+	align-items: center;
+	gap: 15px;
+	margin-bottom: 15px;
+}
+
+.wp-ai-card-icon {
+	width: 48px;
+	height: 48px;
+	border-radius: 12px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.wp-ai-card-title {
+	font-size: 14px;
+	color: #64748b;
+	margin: 0;
+}
+
+.wp-ai-card-value {
+	font-size: 32px;
+	font-weight: bold;
+	color: #1e293b;
+	margin: 0;
+}
+
+/* Responsive Tables */
+@media (max-width: 782px) {
+	.wp-list-table td {
+		display: block;
+		width: auto;
+	}
+	
+	.wp-list-table td[data-colname]:before {
+		content: attr(data-colname) ": ";
+		font-weight: 600;
+	}
+}
+
+/* Quick Links */
+.wp-ai-quick-links a {
+	display: block;
+	padding: 15px;
+	background: white;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	text-decoration: none;
+	color: #333;
+	transition: all 0.2s;
+}
+
+.wp-ai-quick-links a:hover {
+	border-color: #667eea;
+	box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
+	transform: translateY(-2px);
+}
+
+/* Status Indicators */
+.wp-ai-status {
+	display: inline-block;
+	padding: 4px 12px;
+	border-radius: 12px;
+	font-size: 12px;
+	font-weight: 600;
+}
+
+.wp-ai-status-active {
+	background: #d1fae5;
+	color: #065f46;
+}
+
+.wp-ai-status-inactive {
+	background: #fee2e2;
+	color: #991b1b;
+}
+
+/* Loading Spinner */
+.wp-ai-spinner {
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	border: 3px solid rgba(0,0,0,0.1);
+	border-radius: 50%;
+	border-top-color: #667eea;
+	animation: wp-ai-spin 1s ease-in-out infinite;
+}
+
+@keyframes wp-ai-spin {
+	to { transform: rotate(360deg); }
+}
+
+/* Notices */
+.wp-ai-notice {
+	padding: 12px 15px;
+	border-left: 4px solid;
+	margin: 15px 0;
+	border-radius: 4px;
+}
+
+.wp-ai-notice-success {
+	background: #ecfdf5;
+	border-color: #10b981;
+	color: #065f46;
+}
+
+.wp-ai-notice-error {
+	background: #fef2f2;
+	border-color: #ef4444;
+	color: #991b1b;
+}
+
+.wp-ai-notice-warning {
+	background: #fffbeb;
+	border-color: #f59e0b;
+	color: #92400e;
+}
+
+/* RTL Support */
+body.rtl .wp-ai-admin-container {
+	direction: rtl;
+}
+
+body.rtl .wp-ai-card-header {
+	flex-direction: row-reverse;
+}
+

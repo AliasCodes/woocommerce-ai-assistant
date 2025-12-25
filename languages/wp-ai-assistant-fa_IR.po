@@ -1,0 +1,348 @@
+# Persian (Farsi) translation for WP AI Assistant
+# Copyright (C) 2024 WordPress Assistant Team
+# This file is distributed under the GPL-2.0+.
+msgid ""
+msgstr ""
+"Project-Id-Version: WP AI Assistant 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress-assistant.com/support\n"
+"POT-Creation-Date: 2024-01-01 00:00:00+00:00\n"
+"PO-Revision-Date: 2024-01-01 00:00+0000\n"
+"Last-Translator: WordPress Assistant Team\n"
+"Language-Team: Persian\n"
+"Language: fa_IR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"X-Generator: WordPress\n"
+
+# Plugin Info
+msgid "WP AI Assistant"
+msgstr "دستیار هوش مصنوعی"
+
+msgid "AI-powered chat assistant for your WordPress website with bilingual support (English/Persian)"
+msgstr "دستیار چت هوشمند برای وب‌سایت وردپرس شما با پشتیبانی دوزبانه (انگلیسی/فارسی)"
+
+# Common
+msgid "Settings"
+msgstr "تنظیمات"
+
+msgid "Save Settings"
+msgstr "ذخیره تنظیمات"
+
+msgid "Search"
+msgstr "جستجو"
+
+# Chat Widget
+msgid "Intelligent Assistant"
+msgstr "دستیار هوشمند"
+
+msgid "AI Assistant"
+msgstr "دستیار هوش مصنوعی"
+
+msgid "Minimize"
+msgstr "کوچک کردن"
+
+msgid "Close"
+msgstr "بستن"
+
+msgid "Welcome! Let's get started"
+msgstr "خوش آمدید! بیایید شروع کنیم"
+
+msgid "Please provide your details to begin chatting"
+msgstr "لطفا اطلاعات خود را برای شروع گفتگو وارد کنید"
+
+msgid "Your Name*"
+msgstr "نام شما*"
+
+msgid "Email Address"
+msgstr "آدرس ایمیل"
+
+msgid "Phone Number"
+msgstr "شماره تلفن"
+
+msgid "Start Chatting"
+msgstr "شروع گفتگو"
+
+msgid "Hi! How can I help you today?"
+msgstr "سلام! چطور می‌تونم کمکتون کنم؟"
+
+msgid "Just now"
+msgstr "همین الان"
+
+msgid "AI is typing..."
+msgstr "در حال تایپ..."
+
+msgid "Type your message..."
+msgstr "پیام خود را بنویسید..."
+
+msgid "Send message"
+msgstr "ارسال پیام"
+
+msgid "Powered by AI Assistant"
+msgstr "قدرت گرفته از دستیار هوش مصنوعی"
+
+# Admin Menu
+msgid "Analytics"
+msgstr "تحلیل‌ها"
+
+msgid "Chat Users"
+msgstr "کاربران چت"
+
+msgid "Users"
+msgstr "کاربران"
+
+msgid "Chat History"
+msgstr "تاریخچه گفتگو"
+
+# Settings Page
+msgid "API Configuration"
+msgstr "پیکربندی API"
+
+msgid "API URL"
+msgstr "آدرس API"
+
+msgid "Backend API URL (e.g., http://localhost:3000 or https://api.yourdomain.com)"
+msgstr "آدرس API بک‌اند (مثلاً http://localhost:3000 یا https://api.yourdomain.com)"
+
+msgid "API Key"
+msgstr "کلید API"
+
+msgid "Your API access key from the WordPress Assistant platform"
+msgstr "کلید دسترسی API شما از پلتفرم دستیار وردپرس"
+
+msgid "Project ID"
+msgstr "شناسه پروژه"
+
+msgid "Your project ID (optional)"
+msgstr "شناسه پروژه شما (اختیاری)"
+
+msgid "Test Connection"
+msgstr "تست اتصال"
+
+msgid "Widget Settings"
+msgstr "تنظیمات ابزارک"
+
+msgid "Enable Chat Widget"
+msgstr "فعال‌سازی ابزارک چت"
+
+msgid "Show chat widget on website"
+msgstr "نمایش ابزارک چت در وب‌سایت"
+
+msgid "Widget Position"
+msgstr "موقعیت ابزارک"
+
+msgid "Bottom Right"
+msgstr "پایین راست"
+
+msgid "Bottom Left"
+msgstr "پایین چپ"
+
+msgid "Top Right"
+msgstr "بالا راست"
+
+msgid "Top Left"
+msgstr "بالا چپ"
+
+msgid "Primary Color"
+msgstr "رنگ اصلی"
+
+msgid "Greeting Message (English)"
+msgstr "پیام خوش‌آمدگویی (انگلیسی)"
+
+msgid "Greeting Message (Persian)"
+msgstr "پیام خوش‌آمدگویی (فارسی)"
+
+msgid "Placeholder Text (English)"
+msgstr "متن جایگزین (انگلیسی)"
+
+msgid "Placeholder Text (Persian)"
+msgstr "متن جایگزین (فارسی)"
+
+msgid "Content Moderation"
+msgstr "نظارت بر محتوا"
+
+msgid "Forbidden Words"
+msgstr "کلمات ممنوع"
+
+msgid "Comma-separated list of words to block (e.g., spam, badword)"
+msgstr "لیست کلمات مسدودشده با کاما جدا شده (مثلاً spam, badword)"
+
+msgid "Rate Limit"
+msgstr "محدودیت نرخ"
+
+msgid "messages per hour per user"
+msgstr "پیام در ساعت برای هر کاربر"
+
+msgid "User Data Collection"
+msgstr "جمع‌آوری اطلاعات کاربر"
+
+msgid "Collect Information"
+msgstr "جمع‌آوری اطلاعات"
+
+msgid "Display Options"
+msgstr "گزینه‌های نمایش"
+
+msgid "Show Features"
+msgstr "نمایش ویژگی‌ها"
+
+msgid "Message Timestamps"
+msgstr "زمان پیام‌ها"
+
+msgid "Emoji Picker"
+msgstr "انتخابگر ایموجی"
+
+# Users Page
+msgid "Search users..."
+msgstr "جستجوی کاربران..."
+
+msgid "Export to CSV"
+msgstr "خروجی CSV"
+
+msgid "Name"
+msgstr "نام"
+
+msgid "Email"
+msgstr "ایمیل"
+
+msgid "Phone"
+msgstr "تلفن"
+
+msgid "IP Address"
+msgstr "آدرس IP"
+
+msgid "First Seen"
+msgstr "اولین بازدید"
+
+msgid "Last Active"
+msgstr "آخرین فعالیت"
+
+msgid "No users found."
+msgstr "کاربری یافت نشد."
+
+# Chat History Page
+msgid "Recent Sessions"
+msgstr "جلسات اخیر"
+
+msgid "Conversation"
+msgstr "گفتگو"
+
+msgid "No chat sessions found."
+msgstr "جلسه گفتگویی یافت نشد."
+
+msgid "Select a session to view messages"
+msgstr "یک جلسه را برای مشاهده پیام‌ها انتخاب کنید"
+
+msgid "No messages in this session"
+msgstr "پیامی در این جلسه وجود ندارد"
+
+msgid "ago"
+msgstr "پیش"
+
+msgid "Load More"
+msgstr "بارگذاری بیشتر"
+
+# Analytics Page
+msgid "Last 7 Days"
+msgstr "7 روز اخیر"
+
+msgid "Last 30 Days"
+msgstr "30 روز اخیر"
+
+msgid "Last 90 Days"
+msgstr "90 روز اخیر"
+
+msgid "Total Messages"
+msgstr "کل پیام‌ها"
+
+msgid "Total Users"
+msgstr "کل کاربران"
+
+msgid "Chat Sessions"
+msgstr "جلسات گفتگو"
+
+msgid "Avg. Messages/Session"
+msgstr "میانگین پیام/جلسه"
+
+msgid "Daily Activity"
+msgstr "فعالیت روزانه"
+
+msgid "View Users"
+msgstr "مشاهده کاربران"
+
+msgid "Manage chat users"
+msgstr "مدیریت کاربران چت"
+
+msgid "View conversations"
+msgstr "مشاهده گفتگوها"
+
+msgid "Configure plugin"
+msgstr "پیکربندی افزونه"
+
+msgid "Messages"
+msgstr "پیام‌ها"
+
+# Error Messages
+msgid "You do not have sufficient permissions to access this page."
+msgstr "شما مجوز کافی برای دسترسی به این صفحه را ندارید."
+
+msgid "You do not have sufficient permissions to perform this action."
+msgstr "شما مجوز کافی برای انجام این عملیات را ندارید."
+
+msgid "API key not configured. Please contact the site administrator."
+msgstr "کلید API پیکربندی نشده است. لطفاً با مدیر سایت تماس بگیرید."
+
+msgid "Connection error: %s"
+msgstr "خطای اتصال: %s"
+
+msgid "Unknown error occurred"
+msgstr "خطای ناشناخته رخ داده است"
+
+msgid "Invalid response from server"
+msgstr "پاسخ نامعتبر از سرور"
+
+msgid "Connection failed: %s"
+msgstr "اتصال ناموفق بود: %s"
+
+msgid "Server returned status code: %d"
+msgstr "سرور کد وضعیت را برگرداند: %d"
+
+msgid "Name is required"
+msgstr "نام الزامی است"
+
+msgid "Failed to save user"
+msgstr "ذخیره کاربر ناموفق بود"
+
+msgid "Missing required fields"
+msgstr "فیلدهای الزامی وجود ندارد"
+
+msgid "Message is too long (max 1000 characters)"
+msgstr "پیام خیلی طولانی است (حداکثر 1000 کاراکتر)"
+
+msgid "Message contains forbidden content"
+msgstr "پیام حاوی محتوای ممنوع است"
+
+msgid "User not found"
+msgstr "کاربر یافت نشد"
+
+msgid "You are sending messages too quickly. Please wait a moment."
+msgstr "شما خیلی سریع پیام می‌فرستید. لطفاً لحظه‌ای صبر کنید."
+
+msgid "Failed to save message"
+msgstr "ذخیره پیام ناموفق بود"
+
+msgid "Session ID required"
+msgstr "شناسه جلسه الزامی است"
+
+msgid "Invalid role"
+msgstr "نقش نامعتبر"
+
+msgid "API key is not configured"
+msgstr "کلید API پیکربندی نشده است"
+
+msgid "API URL is not configured"
+msgstr "آدرس API پیکربندی نشده است"
+
+msgid "Connection successful!"
+msgstr "اتصال موفقیت‌آمیز بود!"
+
