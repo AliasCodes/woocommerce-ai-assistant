@@ -346,6 +346,9 @@ msgstr "آدرس API پیکربندی نشده است"
 msgid "Connection successful!"
 msgstr "اتصال موفقیت‌آمیز بود!"
 
+msgid "Connection successful! But API key or Ip Address is not valid"
+msgstr "اتصال موفقیت‌آمیز بود! اما Api Key و یا ip شما صحیح نمیباشد"
+
 # WooCommerce and REST API Notices
 msgid "<strong>WooCommerce is not installed or activated!</strong> WP AI Assistant requires WooCommerce to provide product recommendations and order creation. Please <a href=\"%s\" target=\"_blank\">install WooCommerce</a> or activate it from the <a href=\"%s\">Plugins page</a>."
 msgstr "<strong>ووکامرس نصب یا فعال نشده است!</strong> دستیار هوش مصنوعی به ووکامرس نیاز دارد تا بتواند پیشنهادات محصول و ایجاد سفارش را ارائه دهد. لطفاً <a href=\"%s\" target=\"_blank\">ووکامرس را نصب کنید</a> یا آن را از <a href=\"%s\">صفحه افزونه‌ها</a> فعال کنید."

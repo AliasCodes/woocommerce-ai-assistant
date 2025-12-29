@@ -33,8 +33,10 @@ class WP_AI_Admin {
 		add_action( 'admin_menu', array( $this, 'add_menu_pages' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
-		add_action( 'admin_post_wp_ai_test_connection', array( $this, 'test_connection' ) );
 		add_action( 'admin_post_wp_ai_export_users', array( $this, 'export_users' ) );
+		
+		// AJAX handlers
+		add_action( 'wp_ajax_wp_ai_test_connection', array( $this, 'ajax_test_connection' ) );
 		
 		// Admin notices for requirements
 		add_action( 'admin_notices', array( $this, 'show_requirement_notices' ) );
@@ -224,38 +226,31 @@ class WP_AI_Admin {
 	}
 	
 	/**
-	 * Test API connection
+	 * AJAX: Test API connection
 	 */
-	public function test_connection() {
+	public function ajax_test_connection() {
+		// Check permissions
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( esc_html__( 'You do not have sufficient permissions to perform this action.', 'wp-ai-assistant' ) );
+			wp_send_json_error( array(
+				'message' => __( 'You do not have sufficient permissions to perform this action.', 'wp-ai-assistant' ),
+			) );
 		}
 		
-		check_admin_referer( 'wp_ai_test_connection' );
+		// Check nonce
+		check_ajax_referer( 'wp_ai_admin_nonce', 'nonce' );
 		
+		// Test connection
 		$result = $this->api_client->test_connection();
 		
 		if ( $result['success'] ) {
-			add_settings_error(
-				'wp_ai_assistant_messages',
-				'wp_ai_test_connection',
-				$result['message'],
-				'success'
-			);
+			wp_send_json_success( array(
+				'message' => $result['message'],
+			) );
 		} else {
-			add_settings_error(
-				'wp_ai_assistant_messages',
-				'wp_ai_test_connection',
-				$result['message'],
-				'error'
-			);
+			wp_send_json_error( array(
+				'message' => $result['message'],
+			) );
 		}
-		
-		set_transient( 'settings_errors', get_settings_errors(), 30 );
-		
-		$redirect = add_query_arg( 'settings-updated', 'true', wp_get_referer() );
-		wp_safe_redirect( $redirect );
-		exit;
 	}
 	
 	/**
@@ -305,7 +300,28 @@ class WP_AI_Admin {
 	public function show_requirement_notices() {
 		// Only show on our plugin pages
 		$screen = get_current_screen();
-		if ( ! $screen || strpos( $screen->id, 'wp-ai-assistant' ) === false ) {
+		
+		// Check if we're on a plugin admin page
+		$is_plugin_page = false;
+		
+		if ( $screen ) {
+			// Check screen ID (works for most cases)
+			if ( strpos( $screen->id, 'wp-ai-assistant' ) !== false ) {
+				$is_plugin_page = true;
+			}
+			
+			// Also check parent base (for submenu pages)
+			if ( isset( $screen->parent_base ) && $screen->parent_base === 'wp-ai-assistant' ) {
+				$is_plugin_page = true;
+			}
+			
+			// Check page parameter in URL
+			if ( isset( $_GET['page'] ) && strpos( $_GET['page'], 'wp-ai-assistant' ) !== false ) {
+				$is_plugin_page = true;
+			}
+		}
+		
+		if ( ! $is_plugin_page ) {
 			return;
 		}
 		
@@ -432,12 +448,12 @@ class WP_AI_Admin {
 	 * @param string $type Notice type (error, warning, success, info)
 	 */
 	private function display_admin_notice( $message, $type = 'info' ) {
-		$class = 'notice notice-' . $type . ' is-dismissible';
-		printf(
-			'<div class="%1$s"><p>%2$s</p></div>',
-			esc_attr( $class ),
-			wp_kses_post( $message )
-		);
+		$class = 'notice notice-' . $type . ' is-dismissible wp-ai-requirement-notice';
+		?>
+		<div class="<?php echo esc_attr( $class ); ?>">
+			<p><?php echo wp_kses_post( $message ); ?></p>
+		</div>
+		<?php
 	}
 }
 

@@ -273,14 +273,30 @@
 				.then(response => {
 					this.hideTypingIndicator();
 					
-					if (response.success) {
-						this.addMessage('assistant', response.data.response);
+					if (response.success && response.data) {
+						// Get response text (handle both string and object responses)
+						const responseText = response.data.response || '';
 						
-						// Save to database
-						this.saveMessage('user', message);
-						this.saveMessage('assistant', response.data.response);
+						if (responseText) {
+							// Add assistant message (HTML will be sanitized automatically)
+							this.addMessage('assistant', responseText);
+							
+							// Update session ID if provided
+							if (response.data.sessionId) {
+								this.state.sessionId = response.data.sessionId;
+							}
+							
+							// Save to database
+							this.saveMessage('user', message);
+							this.saveMessage('assistant', responseText);
+						} else {
+							this.addMessage('assistant', 'Sorry, I received an empty response. Please try again.');
+						}
 					} else {
-						this.addMessage('assistant', response.data.message || 'Sorry, I encountered an error. Please try again.');
+						const errorMessage = (response.data && response.data.message) 
+							? response.data.message 
+							: 'Sorry, I encountered an error. Please try again.';
+						this.addMessage('assistant', errorMessage);
 					}
 				})
 				.catch(error => {
@@ -316,6 +332,137 @@
 		},
 		
 		/**
+		 * Sanitize HTML content - allow safe tags only
+		 */
+		sanitizeHTML: function(html) {
+			// Create a temporary div to parse HTML
+			const temp = document.createElement('div');
+			temp.innerHTML = html;
+			
+			// List of allowed tags and their allowed attributes
+			const allowedTags = {
+				'a': ['href', 'target', 'rel'],
+				'p': [],
+				'br': [],
+				'strong': [],
+				'b': [],
+				'em': [],
+				'i': [],
+				'u': [],
+				'span': ['class'],
+				'div': ['class'],
+				'ul': [],
+				'ol': [],
+				'li': [],
+				'h1': [],
+				'h2': [],
+				'h3': [],
+				'h4': [],
+				'h5': [],
+				'h6': [],
+			};
+			
+			// Recursively sanitize nodes
+			const sanitizeNode = function(node) {
+				if (node.nodeType === Node.TEXT_NODE) {
+					return node.cloneNode(true);
+				}
+				
+				if (node.nodeType === Node.ELEMENT_NODE) {
+					const tagName = node.tagName.toLowerCase();
+					
+					// If tag is not allowed, return its text content only
+					if (!allowedTags[tagName]) {
+						return document.createTextNode(node.textContent || '');
+					}
+					
+					// Create a new element with the same tag name
+					const newNode = document.createElement(tagName);
+					
+					// Copy allowed attributes
+					const allowedAttrs = allowedTags[tagName];
+					for (let attr of allowedAttrs) {
+						const value = node.getAttribute(attr);
+						if (value) {
+							// Special handling for links
+							if (tagName === 'a' && attr === 'href') {
+								// Ensure href is safe (http, https, or relative)
+								if (value.match(/^(https?:\/\/|\/|#)/i)) {
+									newNode.setAttribute(attr, value);
+								}
+							} else if (tagName === 'a' && attr === 'target') {
+								// Only allow _blank
+								if (value === '_blank') {
+									newNode.setAttribute(attr, value);
+									// Add rel="noopener noreferrer" for security
+									newNode.setAttribute('rel', 'noopener noreferrer');
+								}
+							} else {
+								newNode.setAttribute(attr, value);
+							}
+						}
+					}
+					
+					// Recursively sanitize child nodes
+					for (let child of node.childNodes) {
+						const sanitizedChild = sanitizeNode(child);
+						if (sanitizedChild) {
+							newNode.appendChild(sanitizedChild);
+						}
+					}
+					
+					return newNode;
+				}
+				
+				return null;
+			};
+			
+			// Sanitize all nodes
+			const sanitized = document.createDocumentFragment();
+			for (let child of temp.childNodes) {
+				const sanitizedChild = sanitizeNode(child);
+				if (sanitizedChild) {
+					sanitized.appendChild(sanitizedChild);
+				}
+			}
+			
+			return sanitized;
+		},
+		
+		/**
+		 * Process HTML content - ensure links open in new tab and convert newlines
+		 */
+		processHTML: function(html) {
+			if (!html) return '';
+			
+			// Convert \n to <br/> (handle both \n and \r\n)
+			html = html.replace(/\r\n/g, '<br/>').replace(/\n/g, '<br/>');
+			
+			// If content doesn't contain HTML tags (other than <br/>), return as is
+			if (!/<[^>]+>/.test(html.replace(/<br\/?>/gi, ''))) {
+				return html;
+			}
+			
+			// Sanitize HTML
+			const sanitized = this.sanitizeHTML(html);
+			
+			// Create a temporary container to get HTML string
+			const container = document.createElement('div');
+			container.appendChild(sanitized);
+			
+			// Ensure all links open in new tab
+			const links = container.querySelectorAll('a');
+			links.forEach(link => {
+				if (!link.getAttribute('target')) {
+					link.setAttribute('target', '_blank');
+					link.setAttribute('rel', 'noopener noreferrer');
+				}
+			});
+			
+			return container.innerHTML;
+		},
+		
+		/**
 		 * Add message to UI
 		 */
 		addMessage: function(role, content) {
@@ -331,14 +478,24 @@
 			const contentDiv = document.createElement('div');
 			contentDiv.className = 'wp-ai-message-content';
 			
-			const paragraph = document.createElement('p');
-			paragraph.textContent = content;
+			// For user messages, use textContent (security - no HTML from user input)
+			// For assistant messages, process and allow safe HTML
+			if (role === 'user') {
+				const paragraph = document.createElement('p');
+				paragraph.textContent = content;
+				contentDiv.appendChild(paragraph);
+			} else {
+				// Process HTML content for assistant messages
+				const processedHTML = this.processHTML(content);
+				const paragraph = document.createElement('p');
+				paragraph.innerHTML = processedHTML;
+				contentDiv.appendChild(paragraph);
+			}
 			
 			const time = document.createElement('span');
 			time.className = 'wp-ai-message-time';
 			time.textContent = 'Just now';
 			
-			contentDiv.appendChild(paragraph);
 			contentDiv.appendChild(time);
 			
 			messageDiv.appendChild(avatar);

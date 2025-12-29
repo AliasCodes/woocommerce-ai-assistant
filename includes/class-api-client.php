@@ -32,7 +32,7 @@ class WP_AI_API_Client {
 	 */
 	public function __construct() {
 		$settings = get_option( 'wp_ai_assistant_settings', array() );
-		$this->api_url    = isset( $settings['api_url'] ) ? rtrim( $settings['api_url'], '/' ) : 'http://localhost:3000';
+		$this->api_url    = isset( $settings['api_url'] ) ? rtrim( $settings['api_url'], '/' ) : 'https://api.webtamino.com';
 		$this->api_key    = isset( $settings['api_key'] ) ? $settings['api_key'] : '';
 		$this->project_id = isset( $settings['project_id'] ) ? $settings['project_id'] : '';
 	}
@@ -75,17 +75,17 @@ class WP_AI_API_Client {
 		);
 		
 		// Add signature if secret is defined
-		if ( defined( 'WP_AI_WEBHOOK_SECRET' ) && WP_AI_WEBHOOK_SECRET ) {
+		if ( $this->project_id ) {
 			$headers['X-Signature'] = $this->generate_signature( wp_json_encode( $payload ) );
 		}
 		
 		// Make request
 		$response = wp_remote_post(
-			$this->api_url . '/v1/chat',
+			$this->api_url . '/api/v1/chat',
 			array(
 				'headers' => $headers,
 				'body'    => wp_json_encode( $payload ),
-				'timeout' => 30,
+				'timeout' => 60, // 1 minute timeout for chat requests
 			)
 		);
 		
@@ -106,7 +106,7 @@ class WP_AI_API_Client {
 		$data = json_decode( $body, true );
 		
 		// Handle HTTP errors
-		if ( $response_code !== 200 ) {
+		if ( $response_code !== 200 && $response_code !== 201 ) {
 			$error_message = isset( $data['message'] ) ? $data['message'] : __( 'Unknown error occurred', 'wp-ai-assistant' );
 			return array(
 				'success' => false,
@@ -137,7 +137,7 @@ class WP_AI_API_Client {
 	 * @return string HMAC signature
 	 */
 	private function generate_signature( $payload ) {
-		$secret = defined( 'WP_AI_WEBHOOK_SECRET' ) ? WP_AI_WEBHOOK_SECRET : 'default-secret';
+		$secret = $this->project_id ? $this->project_id : 'default-secret';
 		return hash_hmac( 'sha256', $payload, $secret );
 	}
 	
@@ -153,7 +153,7 @@ class WP_AI_API_Client {
 		
 		// Try a simple validation request
 		$response = wp_remote_get(
-			$this->api_url . '/v1/health',
+			$this->api_url . '/api/v1/auth/validate-key',
 			array(
 				'headers' => array(
 					'X-API-Key' => $this->api_key,
@@ -192,9 +192,12 @@ class WP_AI_API_Client {
 		
 		// Try to connect
 		$response = wp_remote_get(
-			$this->api_url . '/v1/health',
+			$this->api_url . '/api/v1/health',
 			array(
 				'timeout' => 10,
+				'headers' => array(
+					'X-API-Key' => $this->api_key,
+				),
 			)
 		);
 		
@@ -211,7 +214,15 @@ class WP_AI_API_Client {
 		
 		$code = wp_remote_retrieve_response_code( $response );
 		
+		$validate_api_key = $this->validate_api_key();
+
 		if ( $code === 200 ) {
+			if ( ! $validate_api_key ) {
+				return array(
+					'success' => true,
+					'message' => __( 'Connection successful! But API key or Ip Address is not valid', 'wp-ai-assistant' ),
+				);
+			}
 			return array(
 				'success' => true,
 				'message' => __( 'Connection successful!', 'wp-ai-assistant' ),

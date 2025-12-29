@@ -342,6 +342,9 @@ msgstr ""
 msgid "Connection successful!"
 msgstr ""
 
+msgid "Connection successful! But API key or Ip Address is not valid"
+msgstr ""
+
 # WooCommerce and REST API Notices
 msgid "<strong>WooCommerce is not installed or activated!</strong> WP AI Assistant requires WooCommerce to provide product recommendations and order creation. Please <a href=\"%s\" target=\"_blank\">install WooCommerce</a> or activate it from the <a href=\"%s\">Plugins page</a>."
 msgstr ""

@@ -242,6 +242,37 @@
 	word-wrap: break-word;
 }
 
+/* Links in message content */
+.wp-ai-message-content a {
+	color: #667eea;
+	text-decoration: underline;
+	transition: color 0.2s;
+}
+
+.wp-ai-message-content a:hover {
+	color: #5568d3;
+	text-decoration: underline;
+}
+
+.wp-ai-user-message .wp-ai-message-content a {
+	color: rgba(255, 255, 255, 0.9);
+	text-decoration: underline;
+}
+
+.wp-ai-user-message .wp-ai-message-content a:hover {
+	color: white;
+	text-decoration: underline;
+}
+
+/* Ensure links are visible and clickable */
+.wp-ai-message-content a:visited {
+	color: #667eea;
+}
+
+.wp-ai-user-message .wp-ai-message-content a:visited {
+	color: rgba(255, 255, 255, 0.9);
+}
+
 .wp-ai-message-time {
 	font-size: 11px;
 	color: #94a3b8;

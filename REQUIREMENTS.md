@@ -9,19 +9,23 @@ WP AI Assistant automatically checks for required dependencies and displays warn
 **Status**: ❌ Critical
 
 **Why Required**: The plugin needs WooCommerce to:
+
 - Search and recommend products
 - Display product information
 - Create orders through chat
 - Access product catalog
 
 **Error Message**:
+
 ```
 ⚠️ WooCommerce is not installed or activated!
 WP AI Assistant requires WooCommerce to provide product recommendations and order creation.
 ```
 
 **How to Fix**:
+
 1. **Install WooCommerce**:
+
    - Go to **Plugins → Add New**
    - Search for "WooCommerce"
    - Click "Install Now" → "Activate"
@@ -36,11 +40,13 @@ WP AI Assistant requires WooCommerce to provide product recommendations and orde
 **Status**: ❌ Critical
 
 **Why Required**: The plugin uses REST API to:
+
 - Communicate with the backend
 - Send/receive chat messages
 - Sync data in real-time
 
 **Error Message**:
+
 ```
 ⚠️ WordPress REST API is disabled!
 WP AI Assistant requires the REST API to function properly.
@@ -49,6 +55,7 @@ WP AI Assistant requires the REST API to function properly.
 **How to Fix**:
 
 **Check if REST API is disabled**:
+
 ```bash
 # Test REST API
 curl https://yoursite.com/wp-json/
@@ -57,15 +64,19 @@ curl https://yoursite.com/wp-json/
 ```
 
 **Common causes**:
+
 1. **Plugin blocking REST API**:
+
    - Disable security plugins temporarily
    - Check: iThemes Security, Wordfence, etc.
 
 2. **Theme blocking REST API**:
+
    - Switch to default theme temporarily
    - Check theme's functions.php
 
 3. **Custom code blocking**:
+
    ```php
    // Remove this from wp-config.php or functions.php
    add_filter('rest_enabled', '__return_false');
@@ -80,18 +91,21 @@ curl https://yoursite.com/wp-json/
 **Status**: ⚠️ Warning (Not Critical)
 
 **Why Recommended**: Enhanced functionality for:
+
 - Advanced product searches
 - Order management
 - Inventory checking
 - API-based operations
 
 **Warning Message**:
+
 ```
 ⚠️ WooCommerce REST API may not be properly configured!
 For full functionality, ensure WooCommerce REST API is enabled.
 ```
 
 **How to Fix**:
+
 1. Go to **WooCommerce → Settings**
 2. Click **Advanced** tab
 3. Click **REST API** section
@@ -103,12 +117,14 @@ For full functionality, ensure WooCommerce REST API is enabled.
 The plugin automatically checks these requirements on **ALL admin pages** of the plugin:
 
 ### Admin Pages Showing Notices:
+
 - ✅ AI Assistant → Analytics
 - ✅ AI Assistant → Users
 - ✅ AI Assistant → Chat History
 - ✅ AI Assistant → Settings
 
 ### When Checks Run:
+
 - On page load of any plugin admin page
 - After plugin activation
 - After WooCommerce is activated/deactivated
@@ -117,6 +133,7 @@ The plugin automatically checks these requirements on **ALL admin pages** of the
 ## Visual Examples
 
 ### Error Notice (WooCommerce Missing)
+
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │ ⚠️ WooCommerce is not installed or activated!              │
@@ -129,6 +146,7 @@ The plugin automatically checks these requirements on **ALL admin pages** of the
 ```
 
 ### Error Notice (REST API Disabled)
+
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │ ⚠️ WordPress REST API is disabled!                         │
@@ -140,6 +158,7 @@ The plugin automatically checks these requirements on **ALL admin pages** of the
 ```
 
 ### Warning Notice (WooCommerce API)
+
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │ ⚠️ WooCommerce REST API may not be properly configured!   │
@@ -152,6 +171,7 @@ The plugin automatically checks these requirements on **ALL admin pages** of the
 ## Dismissible Notices
 
 All requirement notices are **dismissible** but will:
+
 - Reappear on next page load if issue persists
 - Disappear automatically once requirement is met
 - Show only on plugin admin pages (not entire WordPress admin)
@@ -190,6 +210,7 @@ add_action('admin_notices', array($this, 'show_requirement_notices'));
 ### Issue: Notice shows but WooCommerce is installed
 
 **Solution**:
+
 1. Verify WooCommerce is activated (not just installed)
 2. Check for WooCommerce errors in debug.log
 3. Try deactivating and reactivating WooCommerce
@@ -197,6 +218,7 @@ add_action('admin_notices', array($this, 'show_requirement_notices'));
 ### Issue: REST API notice shows but API works
 
 **Solution**:
+
 1. Clear WordPress cache
 2. Check for filter conflicts:
    ```php
@@ -212,6 +234,7 @@ add_action('admin_notices', array($this, 'show_requirement_notices'));
 ### Issue: Notices don't disappear after fixing
 
 **Solution**:
+
 1. Clear browser cache (Ctrl+Shift+Del)
 2. Clear WordPress object cache
 3. Hard refresh page (Ctrl+F5)
@@ -232,6 +255,7 @@ define('WP_AI_SKIP_REQUIREMENT_CHECKS', true);
 If you continue to see requirement notices after fixing the issues:
 
 1. **Check WordPress debug log**:
+
    ```php
    // Enable in wp-config.php
    define('WP_DEBUG', true);
@@ -239,6 +263,7 @@ If you continue to see requirement notices after fixing the issues:
    ```
 
 2. **Test requirements manually**:
+
    - Visit: `/wp-json/wc/v3/products`
    - Should show products or auth error (not 404)
 
@@ -256,11 +281,10 @@ If you continue to see requirement notices after fixing the issues:
 
 ## Summary
 
-| Requirement | Status | Impact | Dismissible |
-|-------------|--------|--------|-------------|
-| WooCommerce | Critical | Plugin won't work | Yes |
-| WordPress REST API | Critical | Chat won't function | Yes |
-| WooCommerce REST API | Warning | Reduced functionality | Yes |
+| Requirement          | Status   | Impact                | Dismissible |
+| -------------------- | -------- | --------------------- | ----------- |
+| WooCommerce          | Critical | Plugin won't work     | Yes         |
+| WordPress REST API   | Critical | Chat won't function   | Yes         |
+| WooCommerce REST API | Warning  | Reduced functionality | Yes         |
 
 All checks are automatically performed on plugin admin pages to ensure optimal functionality.
-

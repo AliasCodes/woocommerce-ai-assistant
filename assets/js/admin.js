@@ -23,25 +23,31 @@
 		});
 		
 		// AJAX test connection
-		$('#wp-ai-test-connection').on('click', function(e) {
+		$('#wp-ai-test-connection-btn').on('click', function(e) {
 			e.preventDefault();
 			
 			const $btn = $(this);
+			const $result = $('#wp-ai-test-result');
 			const originalText = $btn.text();
 			
 			$btn.prop('disabled', true).text('Testing...');
+			$result.html('<span style="color: #999;">⏳ Testing connection...</span>');
 			
 			$.post(wpAiAdminConfig.ajaxUrl, {
 				action: 'wp_ai_test_connection',
 				nonce: wpAiAdminConfig.nonce
 			}, function(response) {
 				if (response.success) {
-					alert('Success: ' + response.data.message);
+					$result.html('<span style="color: #46b450;">✅ ' + response.data.message + '</span>');
 				} else {
-					alert('Error: ' + response.data.message);
+					$result.html('<span style="color: #dc3232;">❌ ' + response.data.message + '</span>');
 				}
-			}).fail(function() {
-				alert('Connection failed. Please check your settings.');
+			}).fail(function(xhr) {
+				let errorMsg = 'Connection failed. Please check your settings.';
+				if (xhr.responseJSON && xhr.responseJSON.data && xhr.responseJSON.data.message) {
+					errorMsg = xhr.responseJSON.data.message;
+				}
+				$result.html('<span style="color: #dc3232;">❌ ' + errorMsg + '</span>');
 			}).always(function() {
 				$btn.prop('disabled', false).text(originalText);
 			});

@@ -65,11 +65,11 @@ $settings = get_option( 'wp_ai_assistant_settings', array() );
 				<tr>
 					<th scope="row"></th>
 					<td>
-						<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" style="display:inline;">
-							<input type="hidden" name="action" value="wp_ai_test_connection">
-							<?php wp_nonce_field( 'wp_ai_test_connection' ); ?>
-							<button type="submit" class="button button-secondary"><?php esc_html_e( 'Test Connection', 'wp-ai-assistant' ); ?></button>
-						</form>
+						<button type="button" id="wp-ai-test-connection-btn" class="button button-secondary">
+							<?php esc_html_e( 'Test Connection', 'wp-ai-assistant' ); ?>
+						</button>
+						<span id="wp-ai-test-result" style="margin-left: 10px;"></span>
+						<p class="description"><?php esc_html_e( 'Test the connection to your backend API', 'wp-ai-assistant' ); ?></p>
 					</td>
 				</tr>
 				
